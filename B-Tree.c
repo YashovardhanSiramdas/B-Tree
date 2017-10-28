@@ -1,7 +1,6 @@
 /*
 Author:- Yashovardhan Siramdas & Nipun Bharti
 
-<<<<<<< HEAD
 Programming and Data Strucutres Assignment (Dr. V Masilamani)
 
 B-Tree(3,3)
@@ -16,9 +15,9 @@ Insertion Algorithm:-
 (vi) All the keys in l1 subtree are less than k1
 (vii) All the keys in l2 subtree are more than or equal to k1 and less than k2
 (viii) All the keys in l3 subtree are more than or equal to k2
-*/
 =======
 PDS Assignment
+*/
 
 #include <stdio.h>
 #include <stdlib.h>
