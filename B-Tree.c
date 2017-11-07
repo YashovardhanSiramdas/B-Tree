@@ -202,7 +202,7 @@ void insert()
 				}
 				if(t->pt->size==1)
 				{
-					if(x<t->pt>-k1)
+					if(x<t->pt->k1)
 					{
 						struct node *bucket=(struct node *)malloc(sizeof(struct node));
 						bucket->type=2;
