@@ -234,7 +234,46 @@ void insert()
 				}
 				else if(t->pt->size==2)
 				{
+					if(x<t->pt->k1)
+					{
+						struct node *bucket=(struct node *)malloc(sizeof(struct node));
+						struct node *new_parent=(struct node *)malloc(sizeof(struct node));
+						bucket->type=2;
+						bucket->k1=t->k3;
+						bucket->k2=t->k4;
+						t->k3=t->k4=0;
+						t->l2->pt=t->l3->pt=new_parent;
+						bucket->pt=t->pt;
+						bucket->size=t->size=2;
+						new_parent->type=1;
+						new_parent->l1=t->pt->l2;
+						new_parent->l2=t->pt->l3;
+						new_parent->k1=new_parent->l2->k1;
+						new_parent->size=t->pt->size=1;
+						t->pt->l2=bucket;
+						t->pt->l3=NULL;
+						t->pt->k1=t->pt->l2->k1;
+						struct node *sup_pt=t->pt->pt;
+						if(sup_pt->size==1)
+						{
+							sup_pt->l3=new_parent;
+							sup_pt->size=2;
+						}
+						else
+						{
+							
+						}
 
+
+					}
+					else if(x>=t->pt->k1 && x<t->pt->k2)
+					{
+
+					}
+					else if(x>=t->pt->k2)
+					{
+
+					}
 				}
 				
 			}
@@ -250,7 +289,8 @@ void insert()
 
 void display()
 {
-	
+	struct node *t=root;
+
 }
 
 int main()
