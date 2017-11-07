@@ -1,6 +1,6 @@
 
 /*
-Author:- Yashovardhan Siramdas & Nipun Bharti
+Author:- Yashovardhan Siramdas
 
 Programming and Data Strucutres Assignment (Dr. V Masilamani)
 
@@ -77,6 +77,7 @@ void insert()
 		{
 			if(root->size==1)
 			{
+				printf("t1\n");
 				root->k2=x;
 				root->size=root->size+1;
 				if(root->k1 > root->k2)
@@ -84,6 +85,7 @@ void insert()
 			}
 			else if(root->size==2)
 			{
+				printf("t2\n");
 				root->k3=x;
 				root->size=root->size+1;
 				if(root->k3<=root->k1)
@@ -99,6 +101,7 @@ void insert()
 			}
 			else if(root->size==3)
 			{
+				printf("t3\n");
 				root->k4=x;
 				if(root->k4<=root->k1)
 				{
@@ -126,13 +129,34 @@ void insert()
 				root->pt=sibling->pt=parent;
 				parent->l1=root;
 				parent->l2=sibling;
+				parent->k1=sibling->k1;
+				parent->size=1;
 				root=parent;
-
+				printf("t4\n");
 
 			}
 		}
 		else
-		{}
+		{
+			struct node *t=root;
+			while(t->type!=2)
+			{
+				if(x<t->k1)
+				{
+					t=t->l1;
+				}
+				else if(x>=t->k1 && x<t->k2)
+				{
+					t=t->l2;
+				}
+				else if(x>=t->k3)
+				{
+					t=t->l3;
+				}
+
+			}
+
+		}
 	}
 	printf("%d is inserted into B-Tree\n",x);
 	
@@ -152,33 +176,31 @@ int main()
 	int ch=0;
 	while(1)
 	{
-		printf("1.Insert\n2.Delete\n3.Print\n4.Exit\n");  //Menu
+		printf("1.Insert\n2.Display\n3.Exit\n");  //Menu
 		scanf("%d",&ch);
 		switch(ch)
 		{
 			case 1:
 			{
 				insert();
-				break;
 			}
+			break;
+
 			case 2:
 			{
-				//delete();
-				break;
+				//display();
 			}
+			break;
+
 			case 3:
 			{
-				//display();
-				break;
+				return 0;
 			}
-			case 4:
-			{
-				exit(0);
-				break;
-			}
+			break;
+
 			default:
 			{
-				printf("Wrong choice :( \n");
+				printf("Wrong choice\n");
 			}
 		}
 	}
