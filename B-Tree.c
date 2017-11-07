@@ -77,7 +77,6 @@ void insert()
 		{
 			if(root->size==1)
 			{
-				printf("t1\n");
 				root->k2=x;
 				root->size=root->size+1;
 				if(root->k1 > root->k2)
@@ -85,7 +84,6 @@ void insert()
 			}
 			else if(root->size==2)
 			{
-				printf("t2\n");
 				root->k3=x;
 				root->size=root->size+1;
 				if(root->k3<=root->k1)
@@ -101,7 +99,6 @@ void insert()
 			}
 			else if(root->size==3)
 			{
-				printf("t3\n");
 				root->k4=x;
 				if(root->k4<=root->k1)
 				{
@@ -132,7 +129,6 @@ void insert()
 				parent->k1=sibling->k1;
 				parent->size=1;
 				root=parent;
-				printf("t4\n");
 
 			}
 		}
@@ -141,20 +137,109 @@ void insert()
 			struct node *t=root;
 			while(t->type!=2)
 			{
-				if(x<t->k1)
+				
+				if(t->size==1)
 				{
-					t=t->l1;
+					if(x<t->k1)
+					{
+						t=t->l1;
+					}
+					else
+					{
+						t=t->l2;
+					}
 				}
-				else if(x>=t->k1 && x<t->k2)
+				else if(t->size==2)
 				{
-					t=t->l2;
+					if(x<t->k1)
+					{
+						t=t->l1;
+					}
+					else if(x>=t->k1 && x<t->k2)
+					{
+						t=t->l2;
+					}
+					else if(x>=t->k2)
+					{
+						t=t->l3;
+					}
+					
 				}
-				else if(x>=t->k3)
-				{
-					t=t->l3;
-				}
-
+				
 			}
+
+			if(t->size==2)
+			{
+				t->k3=x;
+				t->size=t->size +1;
+				if(t->k3 <= t->k1)
+				{
+					swap(&(t->k1),&(t->k3));
+					swap(&(t->k2),&(t->k3));
+				}
+				else if(t->k3 > t->k1 && t->k3<=t->k2)
+				{
+					swap(&(t->k2),&(t->k3));
+				}
+			}
+			else if(t->size==3)
+			{
+				t->k4=x;
+				if(t->k4<=t->k1)
+				{
+					swap(&(t->k1),&(t->k4));
+					swap(&(t->k4),&(t->k3));
+					swap(&(t->k2),&(t->k3));
+				}
+				else if(t->k4>t->k1 && t->k4<=t->k2)
+				{
+					swap(&(t->k2),&(t->k4));
+					swap(&(t->k3),&(t->k4));
+				}
+				else if(t->k4>t->k2 && t->k4<=t->k3)
+				{
+					swap(&(t->k3),&(t->k4));
+				}
+				if(t->pt->size==1)
+				{
+					if(x<t->pt>-k1)
+					{
+						struct node *bucket=(struct node *)malloc(sizeof(struct node));
+						bucket->type=2;
+						bucket->k1=t->k3;
+						bucket->k2=t->k4;
+						t->k3=t->k4=0;
+						bucket->pt=t->pt;
+						bucket->size=t->size=2;
+						t->pt->l3=t->pt->l2;
+						t->pt->l2=bucket;
+
+
+					}
+					else
+					{
+						struct node *bucket=(struct node *)malloc(sizeof(struct node));
+						bucket->type=2;
+						bucket->k1=t->k3;
+						bucket->k2=t->k4;
+						t->k3=t->k4=0;
+						bucket->pt=t->pt;
+						bucket->size=t->size=2;
+						t->pt->l3=bucket;
+					}
+					t->pt->size=2;
+					t->pt->k1=t->l2->k1;
+					t->pt->k2=t->l3->k1;
+
+				}
+				else if(t->pt->size==2)
+				{
+
+				}
+				
+			}
+
+
 
 		}
 	}
@@ -168,7 +253,6 @@ void display()
 	
 }
 
-//Driver Function
 int main()
 {
 	int i;
@@ -176,7 +260,7 @@ int main()
 	int ch=0;
 	while(1)
 	{
-		printf("1.Insert\n2.Display\n3.Exit\n");  //Menu
+		printf("1.Insert\n2.Display\n3.Exit\n");
 		scanf("%d",&ch);
 		switch(ch)
 		{
