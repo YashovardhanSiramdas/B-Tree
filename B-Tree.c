@@ -254,16 +254,31 @@ void insert()
 						t->pt->l3=NULL;
 						t->pt->k1=t->pt->l2->k1;
 						struct node *sup_pt=t->pt->pt;
-						if(sup_pt->size==1)
+						while(sup_pt!=NULL)
 						{
-							sup_pt->l3=new_parent;
-							sup_pt->size=2;
-						}
-						else
-						{
+							if(sup_pt->size==1)
+							{
+								sup_pt->l3=sup_pt->l2;
+								sup_pt->l2=new_parent;
+								sup_pt->k1=sup_pt->l2->k1;
+								sup_pt->k2=sup_pt->l3->k1;
+								sup_pt->size=2;
+							}
+							else
+							{
+								struct node *nsp=(struct node *)malloc(sizeof(struct node));
+								nsp->l1=sup_pt->l2;
+								nsp->l2=sup_pt->l3;
+								nsp->type=1;
+								nsp->size=1;
+								nsp->k1=nsp->l2->k1;
+								sup_pt->l2=new_parent;
+								sup_pt->l3=NULL;
+								sup_pt->size=1;
+								sup_pt->k1=sup_pt->l2->k1;
+							}
 							
 						}
-
 
 					}
 					else if(x>=t->pt->k1 && x<t->pt->k2)
