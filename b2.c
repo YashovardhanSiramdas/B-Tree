@@ -210,7 +210,7 @@ struct node* insert(struct node* hptr,int x)
         	choice=2;
         	
          }
-        else if(x<=hptr->x&&x<hptr->y)
+        else if(x>=hptr->x&&x<hptr->y)
         {
             hptr->p2=insert(hptr->p2,x);
             choice=2;
@@ -332,9 +332,19 @@ int main()
     struct node* hptr;
     hptr=NULL;
     int h;
-	for (int i = 1; i <= 10; i++)
+    FILE* file = fopen ("rand.txt", "r");
+  int input[40],input_size=0;
+  while (!feof (file))
+    {  
+      fscanf (file, "%d", &input[input_size]);  
+      input_size++;    
+    }
+  fclose (file);
+  int inpc=0;
+	for (int i = 1; i <= 40; i++)
 	{
-		scanf("%d",&h);
+		h=input[inpc];
+        inpc++;
 		hptr = insert(hptr, h);
 	   
 	    if (hptr->flag == 4)
@@ -353,7 +363,8 @@ int main()
 		}
 		
 	     
-	    printtree(hptr);
+	    
 	}
+    printtree(hptr);
     return 0;
 }
