@@ -4,17 +4,22 @@
 struct node
 {
     int type;
-    int size;
     int bucket[4];
-    int x,y,z;
-    struct node* p1;
-    struct node* p2;
-    struct node* p3;
-    struct node* p4;
+    int key1;
+    int key2;
+    int key3;
     int value;
+    int size;
+    struct node* child1;
+    struct node* child2;
+    struct node* child3;
+    struct node* child4;
     struct node *a1;
     struct node *a2;
+    
 };
+
+int c;
 
 void swap(int* a, int* b)
 {
@@ -59,152 +64,122 @@ struct node* bucketInsert(struct node* root,int key)
     return root;
 }
 
+void newnode_init(struct node *newnode1,struct node *newnode3)
+{
+    newnode1->key1=-1;
+    newnode1->key2=-1;
+    newnode1->key3=-1;
+    newnode3->key1=-1;
+    newnode3->key2=-1;
+    newnode3->key3=-1;
+    newnode1->child1=NULL;
+    newnode1->child2=NULL;
+    newnode1->child3=NULL;
+    newnode1->child4=NULL;
+    newnode3->child1=NULL;
+    newnode3->child2=NULL;
+    newnode3->child3=NULL;
+    newnode3->child4=NULL;
+    newnode1->type=2;
+    newnode3->type=2;
+}
+
+void nodeUpdate(struct node *newnode1,struct node *newnode2,struct node *newnode3,struct node *root)
+{
+    newnode1->key1=root->key1;
+    newnode1->child1=root->child1;
+    newnode1->child2=root->child2;
+    newnode3->key1=root->key3;
+    newnode3->child1=root->child3;
+    newnode3->child2=root->child4;
+    newnode2->type=3;
+    newnode2->a1=newnode1;
+    newnode2->a2=newnode3;
+    newnode2->value=root->key2;
+}
+
+void rootSplit(struct node *newnode,struct node *root)
+{
+    newnode->type = 2;
+    newnode->child1 = root->a1;
+    newnode->child2 = root->a2;
+    newnode->child3 = NULL;
+    newnode->child4 = NULL;
+    newnode->key1 = root->value;
+    newnode->key2=-1;
+}
+
 struct node* nodeSplit(struct node* root,struct node* root1,int position)
 {
     if(position==1)
     {
-        if(root->y==-1)
+        if(root->key2==-1)
         {
-            root->y=root->x;
-            root->p3=root->p2;
-            root->x=root1->value;
-            root->p2=root1->a2;
-            root->p1=root1->a1;
+            root->key2=root->key1;
+            root->child3=root->child2;
+            root->key1=root1->value;
+            root->child2=root1->a2;
+            root->child1=root1->a1;
             return root;
         }
         else
         {
-            root->z=root->y;
-            root->p4=root->p3;
-            root->y=root->x;
-            root->p3=root->p2;
-            root->x=root1->value;
-            root->p2=root1->a2;
-            root->p1=root1->a1;
+            root->key3=root->key2;
+            root->child4=root->child3;
+            root->key2=root->key1;
+            root->child3=root->child2;
+            root->key1=root1->value;
+            root->child2=root1->a2;
+            root->child1=root1->a1;
 
-            struct node* temp1=(struct node*)(malloc(sizeof(struct node)));
-            struct node* temp2=(struct node*)(malloc(sizeof(struct node)));
-            struct node* temp3=(struct node*)(malloc(sizeof(struct node)));
+            struct node* newnode1=(struct node*)(malloc(sizeof(struct node)));
+            struct node* newnode2=(struct node*)(malloc(sizeof(struct node)));
+            struct node* newnode3=(struct node*)(malloc(sizeof(struct node)));
 
-            temp1->p1=NULL;
-            temp1->p2=NULL;
-            temp1->p3=NULL;
-            temp1->x=-1;
-            temp1->y=-1;
-            temp1->z=-1;
-            temp3->x=-1;
-            temp3->y=-1;
-            temp3->z=-1;
-            temp1->p4=NULL;
-            temp3->p1=NULL;
-            temp3->p2=NULL;
-            temp3->p3=NULL;
-            temp3->p4=NULL;
-            temp1->type=2;
-            temp3->type=2;
-
-            temp1->x=root->x;
-            temp1->p1=root->p1;
-            temp1->p2=root->p2;
-            temp3->x=root->z;
-            temp3->p1=root->p3;
-            temp3->p2=root->p4;
-            temp2->type=3;
-            temp2->a1=temp1;
-            temp2->a2=temp3;
-            temp2->value=root->y;
-            return temp2;
+            newnode_init(newnode1,newnode3);
+            nodeUpdate(newnode1,newnode2,newnode3,root);
+            return newnode2;
         }
     }
     else if(position==2)
     {
-      if(root->y==-1)
+      if(root->key2==-1)
         {
-            root->y=root1->value;
-            root->p2=root1->a1;
-            root->p3=root1->a2;
+            root->key2=root1->value;
+            root->child2=root1->a1;
+            root->child3=root1->a2;
             return root;
         }
         else
         {
-            root->z=root->y;
-            root->p4=root->p3;
-            root->y=root1->value;
-            root->p2=root1->a1;
-            root->p3=root1->a2;
+            root->key3=root->key2;
+            root->child4=root->child3;
+            root->key2=root1->value;
+            root->child2=root1->a1;
+            root->child3=root1->a2;
 
-            struct node* temp1=(struct node*)(malloc(sizeof(struct node)));
-            struct node* temp2=(struct node*)(malloc(sizeof(struct node)));
-            struct node* temp3=(struct node*)(malloc(sizeof(struct node)));
+            struct node* newnode1=(struct node*)(malloc(sizeof(struct node)));
+            struct node* newnode2=(struct node*)(malloc(sizeof(struct node)));
+            struct node* newnode3=(struct node*)(malloc(sizeof(struct node)));
 
-            temp1->x=-1;
-            temp1->y=-1;
-            temp1->z=-1;
-            temp3->x=-1;
-            temp3->y=-1;
-            temp3->z=-1;
-            temp1->p1=NULL;
-            temp1->p2=NULL;
-            temp1->p3=NULL;
-            temp1->p4=NULL;
-            temp3->p1=NULL;
-            temp3->p2=NULL;
-            temp3->p3=NULL;
-            temp3->p4=NULL;
-            temp1->type=2;
-            temp3->type=2;
-
-            temp1->x=root->x;
-            temp1->p1=root->p1;
-            temp1->p2=root->p2;
-            temp3->x=root->z;
-            temp3->p1=root->p3;
-            temp3->p2=root->p4;
-            temp2->type=3;
-            temp2->a1=temp1;
-            temp2->a2=temp3;
-            temp2->value=root->y;
-            return temp2;
+            newnode_init(newnode1,newnode3);
+            nodeUpdate(newnode1,newnode2,newnode3,root);
+            return newnode2;
         }
     }
     else if(position==3)
     {
-        root->z=root1->value;
-        root->p3=root1->a1;
-        root->p4=root1->a2;
+        root->key3=root1->value;
+        root->child3=root1->a1;
+        root->child4=root1->a2;
 
-        struct node* temp1=(struct node*)(malloc(sizeof(struct node)));
-        struct node* temp2=(struct node*)(malloc(sizeof(struct node)));
-        struct node* temp3=(struct node*)(malloc(sizeof(struct node)));
+        struct node* newnode1=(struct node*)(malloc(sizeof(struct node)));
+        struct node* newnode2=(struct node*)(malloc(sizeof(struct node)));
+        struct node* newnode3=(struct node*)(malloc(sizeof(struct node)));
 
-        temp1->x=-1;
-        temp1->y=-1;
-        temp1->z=-1;
-        temp3->x=-1;
-        temp3->y=-1;
-        temp3->z=-1;
-        temp1->p1=NULL;
-        temp1->p2=NULL;
-        temp1->p3=NULL;
-        temp1->p4=NULL;
-        temp3->p1=NULL;
-        temp3->p2=NULL;
-        temp3->p3=NULL;
-        temp3->p4=NULL;
-        temp1->type=2;
-        temp3->type=2;
-
-        temp1->x=root->x;
-        temp1->p1=root->p1;
-        temp1->p2=root->p2;
-        temp3->x=root->z;
-        temp3->p1=root->p3;
-        temp3->p2=root->p4;
-        temp2->type=3;
-        temp2->a1=temp1;
-        temp2->a2=temp3;
-        temp2->value=root->y;
-        return temp2;
+        newnode_init(newnode1,newnode3);
+        nodeUpdate(newnode1,newnode2,newnode3,root);
+        return newnode2;
 
     }
     return root;
@@ -214,35 +189,35 @@ struct node* insert(struct node* root,int key)
     int position;
     if(root==NULL)
     {
-        struct node* temp1=(struct node*)(malloc(sizeof(struct node)));
-        temp1->type=1;
-        temp1->size=0;
-        root=temp1;
+        struct node* newnode1=(struct node*)(malloc(sizeof(struct node)));
+        newnode1->type=1;
+        newnode1->size=0;
+        root=newnode1;
         root=bucketInsert(root,key);
-        root->p1 = root->p2 = root->p3 = NULL;
+        root->child1 = root->child2 = root->child3 = NULL;
         return root;
     }
     if(root->type==2)
     {
-        if(key<root->x)
+        if(key<root->key1)
         {
-            root->p1=insert(root->p1,key);
+            root->child1=insert(root->child1,key);
             position=1;
         }
-        else if(key>=root->x && root->y==-1)
+        else if(key>=root->key1 && root->key2==-1)
         {   
-            root->p2=insert(root->p2,key);
+            root->child2=insert(root->child2,key);
             position=2;
             
         }
-        else if(key>=root->x && key<root->y)
+        else if(key>=root->key1 && key<root->key2)
         {
-            root->p2=insert(root->p2,key);
+            root->child2=insert(root->child2,key);
             position=2;
         }
         else
         {
-            root->p3=insert(root->p3,key);
+            root->child3=insert(root->child3,key);
             position=3;
         }
 
@@ -253,71 +228,71 @@ struct node* insert(struct node* root,int key)
         if(root->size<=2)
         {
             root=bucketInsert(root,key);
-            struct node* temp1=(struct node*)(malloc(sizeof(struct node)));
-            temp1->type=4;
-            temp1->value=root->bucket[0];
-            temp1->a1=root;
-            return temp1;
+            struct node* newnode1=(struct node*)(malloc(sizeof(struct node)));
+            newnode1->type=4;
+            newnode1->value=root->bucket[0];
+            newnode1->a1=root;
+            return newnode1;
         }
         else
         {
             root=bucketInsert(root,key);
-            struct node* temp;
-            temp=(struct node*)(malloc(sizeof(struct node)));
-            temp->type=1;
-            temp->bucket[0]=root->bucket[2];
-            temp->bucket[1]=root->bucket[3];
-            temp->size=2;
+            struct node* newnode;
+            newnode=(struct node*)(malloc(sizeof(struct node)));
+            newnode->type=1;
+            newnode->bucket[0]=root->bucket[2];
+            newnode->bucket[1]=root->bucket[3];
+            newnode->size=2;
             root->size=2;
-            struct node* temp1=(struct node*)(malloc(sizeof(struct node)));
-            temp1->type=3;
-            temp1->value=temp->bucket[0];
-            temp1->a1=root;
-            temp1->a2=temp;
-            return temp1;
+            struct node* newnode1=(struct node*)(malloc(sizeof(struct node)));
+            newnode1->type=3;
+            newnode1->value=newnode->bucket[0];
+            newnode1->a1=root;
+            newnode1->a2=newnode;
+            return newnode1;
         }
     }
  
     if(position==1)
     {
-        if((root->p1)->type==3)
+        if((root->child1)->type==3)
         {
-           root=nodeSplit(root,root->p1,1);
+           root=nodeSplit(root,root->child1,1);
         }
-        else if((root->p1)->type==4)
+        else if((root->child1)->type==4)
         {
-           root->p1=(root->p1)->a1;
+           root->child1=(root->child1)->a1;
         }
     }
 
     if(position==2)
     {
-        if((root->p2)->type==3)
+        if((root->child2)->type==3)
         {
-           root=nodeSplit(root,root->p2,2);
+           root=nodeSplit(root,root->child2,2);
         }
-        else if((root->p2)->type==4)
+        else if((root->child2)->type==4)
         {
-            if(root->x>(root->p2)->value)
+            if(root->key1>(root->child2)->value)
             {
-               root->x=(root->p2)->value;
+               root->key1=(root->child2)->value;
             }
-            root->p2=(root->p2)->a1;
+            root->child2=(root->child2)->a1;
         }
     }
     if(position==3)
     {
-        if((root->p3)->type==3)
+        if((root->child3)->type==3)
         {
-           root=nodeSplit(root,root->p3,3);
+           root=nodeSplit(root,root->child3,3);
         }
-        else if((root->p3)->type==4)
+        else if((root->child3)->type==4)
         {
-            if(root->y>(root->p3)->value)
+            if(root->key2>(root->child3)->value)
             {
-                root->y=(root->p3)->value;
+                root->key2=(root->child3)->value;
             }
-            root->p3=(root->p3)->a1;
+            root->child3=(root->child3)->a1;
         }
     }
     return root;
@@ -328,21 +303,24 @@ void display(struct node* root)
 {
     if(root->type!=1)
     {
-        if(root->p1!=NULL)
-            display(root->p1);
-        if(root->p2!=NULL)
-            display(root->p2);
-        if(root->p3!=NULL)
-            display(root->p3);
+        if(root->child1!=NULL)
+            display(root->child1);
+        if(root->child2!=NULL)
+            display(root->child2);
+        if(root->child3!=NULL)
+            display(root->child3);
     }
     else
     {
+        printf("Bucket %d :-\n",c);
+        c++;
         for(int i=0;i<root->size;i++)
             printf("%d ",root->bucket[i]);
         printf("\n");
 
     }
 }
+
 int main()
 {
     struct node* root;
@@ -350,7 +328,7 @@ int main()
     int t;
 
     FILE* file = fopen ("rand.txt", "r");
-    int input[40],input_size=0;
+    int input[1000],input_size=0;
     while (!feof (file))
     {  
       fscanf (file, "%d", &input[input_size]);  
@@ -367,7 +345,7 @@ int main()
         {
             case 1 :
             {
-                int elt=40;
+                int elt=1000;
                 while(elt--)
                 {
                     int key;
@@ -378,15 +356,9 @@ int main()
                         root = root->a1;
                     else if (root->type == 3)
                     {
-                        struct node *temp = (struct node*)malloc(sizeof(struct node));
-                        temp->type = 2;
-                        temp->p1 = root->a1;
-                        temp->p2 = root->a2;
-                        temp->p3 = NULL;
-                        temp->p4 = NULL;
-                        temp->x = root->value;
-                        temp->y=-1;
-                        root=temp;
+                        struct node *newnode = (struct node*)malloc(sizeof(struct node));
+                        rootSplit(newnode,root);
+                        root=newnode;
                     }
                 }
             }
@@ -394,6 +366,7 @@ int main()
 
             case 2 :
             {
+                c=1;
                 printf("Integers in the Tree (Bucket wise):-\n");
                 display(root);   
             }

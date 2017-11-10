@@ -40,17 +40,17 @@ void quickSort(int a[], int low, int high)
 
 int main()
 {
-	int a[40],b[40],c[40],j,i;
+	int a[1000],b[1000],c[1000],j,i;
 	srand(time(NULL));
-	for(i=0;i<40;i++)
+	for(i=0;i<1000;i++)
 	{
 		a[i]=rand();
 		b[i]=a[i];
 	}
-	quickSort(b,0,39);
-	for(i=0;i<40;i++)
+	quickSort(b,0,999);
+	for(i=0;i<1000;i++)
 	{
-		for(j=0;j<40;j++)
+		for(j=0;j<1000;j++)
 		{
 			if(a[i]==b[j])
 			{
@@ -62,7 +62,7 @@ int main()
 
 	FILE *fptr;
    	fptr = fopen("rand.txt","w");
-   	for(i=0;i<40;i++)
+   	for(i=0;i<1000;i++)
    		fprintf(fptr,"%d ",c[i]);
 	fclose(fptr);
 
